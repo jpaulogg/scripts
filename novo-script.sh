@@ -5,9 +5,11 @@
 # cabeçalho
 header="#!/usr/bin/env bash
 #------------------------------------------------------------------------------
+#
 tag
 #
-# João Paulo G. Garcia <joaopauloggarcia@gmail.com>
+#       Autor: João Paulo G. Garcia 
+#       email: <joaopauloggarcia@gmail.com>
 #                                                     $( date +'%d de %B de %Y')
 #------------------------------------------------------------------------------
 # Descrição:

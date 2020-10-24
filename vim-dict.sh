@@ -12,15 +12,15 @@
 #------------------------------------------------------------------------------
 # Caminho para os arquivos
 read -p "Tipo dos arquivos: " ft
+echo
 
-lista=( $1* )
-
+PS3=$'\nNúmero do diretório ou arquivo a ser incluído: '
+ 
 cd ~/.config/nvim/dict
 
-echo "Selecione os diretórios e os arquivos a serem considerados: "
-
-select input in ${lista[@]}
+select input in $( echo $1* ) Sair 
 do
+    [  $input == Sair ] && echo $'Finalizando seleção\n' && break
 
     [[ -d $input ]] && sed '/^" vim: /d' $input/*."$ft" \
         >> "$ft"_dict.txt
@@ -32,6 +32,5 @@ do
         | sed '/^\n*$/d' \
         | sort -u -o "$ft"_dict.txt
 done
-
 
 exit 0

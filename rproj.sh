@@ -23,15 +23,15 @@ mkdir Entrada
 mkdir Saida
 
 # Criar arquivos de rascunhos e testes
-echo "# RASCUNHOS" >> rascunhos_"$PROJETO".R
+resq.sh >> rascunhos_"$PROJETO".R
 
 # Criar arquivos e tornar script executável
 echo "# TESTES\n" >> testes_"$PROJETO".R
-vimSnippets.sh r teste >> testes_"$PROJETO".R
-rEsqueleto.sh r ç >> "$SCRIPT".R
+nvim-snip.sh r teste >> testes_"$PROJETO".R
+rheader.sh >> "$SCRIPT".R
 chmod +x "$SCRIPT".R
 
 # abrir arquivos com o neovim
-$EDITOR *.R
+$EDITOR rascunhos_"$PROJETO".R
 
 exit 0
