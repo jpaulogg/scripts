@@ -6,4 +6,4 @@
 # Autor    : João Paulo G. Garcia <joaopauloggarcia@gmail.com>
 #-------------------------------------------------------------
 
-sed -n '/'"$2"0'/,/'"$2"1'/{//!p;}' ~/.config/nvim/snippets/"$1"snippet
+sed -n '/'^"$2"0'/,/'^"$2"1'/{//!p;}' ~/.config/nvim/snippets/snippet."$1"

@@ -8,13 +8,16 @@
 
 # Entrar no diretório do R
 cd ~/R
+printf '%s\n' */
+echo
 
 # Nomes do projeto e do script
 read -p "Nome do Projeto: " PROJETO
-read -p "Nome do Script: " SCRIPT
 
 # Testar se já existe um diretório com o nome do projeto
-[[ -d $PROJETO ]] && echo "já existe um diretório com esse nome" && exit 1
+[[ -d $PROJETO ]] && $EDITOR "$PROJETO" && exit 0
+
+read -p "Nome do Script: " SCRIPT
 
 # Criar pastas e arquivos
 mkdir "$PROJETO"
@@ -26,12 +29,11 @@ mkdir Saida
 resq.sh >> rascunhos_"$PROJETO".R
 
 # Criar arquivos e tornar script executável
-echo "# TESTES\n" >> testes_"$PROJETO".R
+echo $'# TESTES\n' >> testes_"$PROJETO".R
 nvim-snip.sh r teste >> testes_"$PROJETO".R
-rheader.sh >> "$SCRIPT".R
 chmod +x "$SCRIPT".R
 
-# abrir arquivos com o neovim
+# abrir rascunhos com o neovim
 $EDITOR rascunhos_"$PROJETO".R
 
 exit 0

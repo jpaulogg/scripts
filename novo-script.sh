@@ -8,13 +8,16 @@ header="#!/usr/bin/env bash
 #
 tag
 #
-#       Autor: João Paulo G. Garcia 
-#       email: <joaopauloggarcia@gmail.com>
+#     Autor: João Paulo G. Garcia 
+#     email: <joaopauloggarcia@gmail.com>
 #                                                     $( date +'%d de %B de %Y')
 #------------------------------------------------------------------------------
-# Descrição:
+# Descrição: tag
 #
-#------------------------------------------------------------------------------"
+#------------------------------------------------------------------------------
+
+
+# vim: set tw=80 et fdm=marker:"
 
 # Entrar no diretório de scripts
 cd ~/.local/bin
@@ -30,3 +33,5 @@ chmod +x "$1".sh
 $EDITOR "$1".sh
 
 exit 0
+
+# vim: set tw=80 et fdm=marker:

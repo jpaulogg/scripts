@@ -11,26 +11,27 @@
 #
 #------------------------------------------------------------------------------
 # Caminho para os arquivos
+dict_dir=~/.config/nvim/dict
+
 read -p "Tipo dos arquivos: " ft
 echo
 
 PS3=$'\nNúmero do diretório ou arquivo a ser incluído: '
- 
-cd ~/.config/nvim/dict
 
 select input in $( echo $1* ) Sair 
 do
+
     [  $input == Sair ] && echo $'Finalizando seleção\n' && break
+    
+    [[ -d $input ]] && cat $input/*."$ft" \
+        >> "$dict_dir"/"$ft"_dict.txt
 
-    [[ -d $input ]] && sed '/^" vim: /d' $input/*."$ft" \
-        >> "$ft"_dict.txt
+    [[ -f $input ]] && cat $input \
+        >> "$dict_dir"/"$ft"_dict.txt
 
-    [[ -f $input ]] && sed '/^" vim: /d' $input \
-        >> "$ft"_dict.txt
+    tr -s '[:punct:][:digit:][:space:]' '\n' < "$dict_dir"/"$ft"_dict.txt \
+        | sort -u -o "$dict_dir"/"$ft"_dict.txt
 
-    tr '[[:punct:][:digit:][:space:]]' '\n' < "$ft"_dict.txt \
-        | sed '/^\n*$/d' \
-        | sort -u -o "$ft"_dict.txt
 done
 
 exit 0

@@ -6,47 +6,52 @@
 # Autor    : João Paulo G. Garcia <joaopauloggarcia@gmail.com>
 #-------------------------------------------------------------
 
-esquelto="# -----------------------------------------------------------------------------
-#                                 1. BASE DE DADOS
+esquelto="
+# PACOTES                                                                  #{{{
+pacotes <- list(\"data.table\", \"forcats\", \"magrittr\",
+                      \"ggplot2\", \"plotly\", \"RColorBrewer\")
+
+for (p in pacotes) {
+  if (!require(p, character.only = TRUE, quietly = TRUE)) {
+    install.packages(p)
+    library(p, character.only = TRUE)
+  }
+}                                                                          #}}}
+
+# -----------------------------------------------------------------------------
+#                               1. ENTRADA
 
 # caminho para o arquivo de entrada/ ou o endereço de download.
 setwd(\"~/R/tag\")
 
-# tag                                                                       {{{
-url <- \"tag\"
+# tag                                                                      #{{{
+url     <- \"tag\"
+entrada <- \"tag\"
 
-if (file.exists(\"tag\")) {
+if (file.exists(entrada)) {
   entrada <- \"tag\"
 } else {
   entrada <- url
 }
 
-tag <- fread(file = entrada,
-		     na.strings = c('\"-\"', '\"X\"', '\"..\"', '\"...\"'),
-		     colClasses = list(\"factor\" = c(tag)),
-		     col.names = c(\"Anotag\", \"UFtag\", \"tag\",
-                                   \"tag\", \"tag\", \"Valortag\"))        #}}}
+tab_tag <- fread(entrada,
+                  na.strings = c('\"-\"', '\"X\"', '\"..\"', '\"...\"'),
+                  colClasses = list(\"factor\" = c(tag)),
+                  col.names = c(\"Anotag\", \"UFtag\", \"tag\",
+                                \"tag\", \"tag\", \"Valortag\"))           #}}}
+
 # -----------------------------------------------------------------------------
-#                                 2. MANIPULAÇÃO
-#                                                                           {{{
+#                               2. MANIPULAÇÃO
 
-                                                                           #}}}
 # -----------------------------------------------------------------------------
-#                                 3. VISUALIZAÇÃO 
-#                                                                           {{{
+#                               3. VISUALIZAÇÃO 
 
-                                                                           #}}}
 # -----------------------------------------------------------------------------
-#                                 4. EXPORTAÇÃO 
-#                                                                           {{{
+#                               4. SAÍDA
 
-                                                                           #}}}
-
-# vim: set sw=2 et ft=r fdm=marker:
+# -----------------------------------------------------------------------------
 "
 
 echo "$esquelto"
 
 exit 0
-
-# vim: set fdm=marker:

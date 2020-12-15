@@ -16,8 +16,8 @@ header="#-----------------------------------------------------------------------
 #
 tag
 #
-#       Autor : João Paulo G. Garcia 
-#       email : <joaopauloggarcia@gmail.com>
+#     Autor : João Paulo G. Garcia 
+#     email : <joaopauloggarcia@gmail.com>
 #                                             $dia
 #-------------------------------------------------------------------------------
 # Software  : $versao
@@ -27,28 +27,14 @@ tag
 #
 #-------------------------------------------------------------------------------
 
-# PACOTES ------------------------------------------------------------------{{{
-pacotes <- list(\"data.table\", \"forcats\", \"magrittr\",
-                \"ggplot2\", \"plotly\", \"RColorBrewer\")
-
-pacotes_instalados <- pacotes %in% rownames(installed.packages())
-
-# instalar pacotes
-if (any(pacotes_instalados == FALSE)) {
-  install.packages(pacotes[!installed_packages])
-}
-# carregar pacotes
-lapply(pacotes, library, character.only=TRUE)                               }}}
-
-# ESTRUTURA ----------------------------------------------------------------{{{
-#...1 - Base de dados
-#...2 - Manipulação
-#...3 - Visualização
-#...4 - Exportação                                                          }}}
+# ESTRUTURA
+#...1 - ENTRADA ......................... (importar dados de entrada)
+#...2 - MANIPULAÇÃO ..................... (filtrar, adicionar colunas, etc)
+#...3 - VISUALIZAÇÃO .................... (gráficos, tabelas, etc)
+#...4 - SAÍDA ........................... (exportar resultados)
 
 "
 echo "$header"
 
 exit 0
 
-# vim: set fdm=marker:
