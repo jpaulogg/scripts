@@ -10,54 +10,53 @@ word_list() {
 }
 	
 usage() {
-	echo "usage: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]\n
+	echo "Uso: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]\n
 	-h, --help\n
-	-f, --files        list of files to get words from\n
-	-d, --directories  list of directories to get words from\n
-	-o, --output-file  default to ./word-list.txt"
+	-f, --files        lista de arquivos de entrada\n
+	-d, --directories  lista de diretórios de entrada\n
+	-o, --output       saída padrão para o arquivo $PWD/word-list.txt"
 }
 		
-input_list=''
-temp=$(mktemp)
-output="word-list.txt"
+input=''                # lista de arquivos gerada a partir das opções -f e -d
+temp=$(mktemp)          # arquivo temporário
+output="word-list.txt"  # destino padrão de saída
 
-# loop através das opções e parâmetros
+# loop para preencher a variável $input com o texto dos arquivos
 while [ $# -gt 0 ]; do
 	case "$1" in
 	-h|--help)
 		usage
 		exit 0
 		;;
-	-o|--output-file)
+	-o|--output)
 		output="$2"
 		shift 2
 		;;
-	-d|--directories)
+	-d|--dirs)
 		shift
-		read -p "file extension (with dot; can be empty): " ft
+		read -p "sufixo/padrão de busca (e.g. '.sh', '[padrão]', ''): " sufix
 		while [ -d "$1" ]; do
-			input_list="${files}$(find "$1" -type f -iname "*$ft" -print)\n"
+			input="${input}$(find "$1" -type f -iname "*$sufix" -print)\n"
 			shift
 		done
 		;;
 	-f|--files)
 		shift
 		while [ -f $1 ]; do
-			files="${files}$1\n"
+			input="${input}$1\n"
 			shift
 		done
 		;;
 	*)
+		echo "Argumentos incorretos.\n$(usage)."
 		exit 1
 		;;
 	esac
 done
 
-echo "$input_list" |\
-while read file; do
-	word_list "$file" >> $temp
+echo "$input" | while read i; do
+	word_list "$i" >> $temp
 done
-
 sort -u $temp >> "$output"
 
 exit 0
