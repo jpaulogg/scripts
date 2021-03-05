@@ -47,11 +47,13 @@ while [ $# -gt 0 ]; do
 		done
 		;;
 	*)
-		echo "Arquivo ou diretório inexistentes.\n$(usage)."
+		echo "Defina opções de entrada.\n$(usage)."
 		exit 1
 		;;
 	esac
 done
+
+[ -z "$input" ] && echo "Nenhum arquivos de entrada definido" && exit 1
 
 echo "$input" | while read i; do
 	word_list "$i" >> $temp
