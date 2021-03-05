@@ -3,12 +3,6 @@
 # Descrição: Gera lista de palavras que pode ser usada como entrada para funções
 #            de auto-completar (como em editores de texto)
 #------------------------------------------------------------------------------
-
-word_list() {
-	sed 's/[[:punct:][:digit:]]//g' $1 |\
-	sed 's/\s/\n/g'
-}
-	
 usage() {
 	echo "Uso: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]\n
 	-h, --help\n
@@ -17,6 +11,11 @@ usage() {
 	-o, --output       saída padrão para o arquivo $PWD/word-list.txt"
 }
 		
+word_list() {
+	sed 's/[[:punct:][:digit:]]//g' $1 |\
+	sed 's/\s/\n/g'
+}
+	
 input=''                # lista de arquivos gerada a partir das opções -f e -d
 temp=$(mktemp)          # arquivo temporário
 output="word-list.txt"  # destino padrão de saída
@@ -48,7 +47,7 @@ while [ $# -gt 0 ]; do
 		done
 		;;
 	*)
-		echo "Argumentos incorretos.\n$(usage)."
+		echo "Arquivo ou diretório inexistentes.\n$(usage)."
 		exit 1
 		;;
 	esac
