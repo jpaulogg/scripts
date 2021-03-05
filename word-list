@@ -53,7 +53,7 @@ while [ $# -gt 0 ]; do
 		shift 2
 		;;
 	*)
-		echo "\nOpções inválidas de entrada.\n$(usage)."
+		echo "\n\033[31mOpções inválidas de entrada\033[0m.\n$(usage)."
 		exit 1
 		;;
 	esac
