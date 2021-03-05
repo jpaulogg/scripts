@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# Descrição: Gera lista de palavras que pode ser usada como entrada para funções
+#            de auto-completar (como em editores de texto)
+#------------------------------------------------------------------------------
+
+word_list() {
+	sed 's/[[:punct:][:digit:]]//g' $1 |\
+	sed 's/\s/\n/g'
+}
+	
+usage() {
+	echo "usage: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]\n
+	-h, --help\n
+	-f, --files        list of files to get words from\n
+	-d, --directories  list of directories to get words from\n
+	-o, --output-file  default to ./word-list.txt"
+}
+		
+input_list=''
+temp=$(mktemp)
+output="word-list.txt"
+
+# loop através das opções e parâmetros
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-h|--help)
+		usage
+		exit 0
+		;;
+	-o|--output-file)
+		output="$2"
+		shift 2
+		;;
+	-d|--directories)
+		shift
+		read -p "file extension (with dot; can be empty): " ft
+		while [ -d "$1" ]; do
+			input_list="${files}$(find "$1" -type f -iname "*$ft" -print)\n"
+			shift
+		done
+		;;
+	-f|--files)
+		shift
+		while [ -f $1 ]; do
+			files="${files}$1\n"
+			shift
+		done
+		;;
+	*)
+		exit 1
+		;;
+	esac
+done
+
+echo "$input_list" |\
+while read file; do
+	word_list "$file" >> $temp
+done
+
+sort -u $temp >> "$output"
+
+exit 0
