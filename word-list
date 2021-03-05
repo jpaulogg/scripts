@@ -5,7 +5,7 @@
 # <https://github.com/jpaulogg/bin>
 #------------------------------------------------------------------------------
 usage() {
-	echo "Uso: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]
+	echo "Uso: word-list [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]
 
 Gera lista de palavras a partir de arquivo(s) de entrada.  Defina ao menos uma entrada
 válida com as opções '-f' e/ou '-d'. Arquivos dos diretórios definidos pela opção '-d'
@@ -33,9 +33,12 @@ while [ $# -gt 0 ]; do
 		usage
 		exit 0
 		;;
-	-o|--output)
-		output="$2"
-		shift 2
+	-f|--files)
+		shift
+		while [ -f "$1" ]; do
+			input="${input}$1\n"
+			shift
+		done
 		;;
 	-d|--dirs)
 		shift
@@ -45,12 +48,9 @@ while [ $# -gt 0 ]; do
 			shift
 		done
 		;;
-	-f|--files)
-		shift
-		while [ -f $1 ]; do
-			input="${input}$1\n"
-			shift
-		done
+	-o|--output)
+		output="$2"
+		shift 2
 		;;
 	*)
 		echo "\nOpções inválidas de entrada.\n$(usage)."
@@ -59,8 +59,8 @@ while [ $# -gt 0 ]; do
 	esac
 done
 
-echo "$input" | while read i; do
-	word_list "$i" >> $temp
+echo "$input" | while read f; do
+	word_list "$f" >> $temp
 done
 sort -u $temp >> "$output"
 
