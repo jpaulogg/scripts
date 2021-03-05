@@ -1,13 +1,19 @@
 #!/bin/sh
 #
-# Descrição: Gera lista de palavras que pode ser usada como entrada para funções
-#            de auto-completar (como em editores de texto)
+# word-list: Gera lista de palavras a partir de arquivos de entrada. Útil para
+#            gerar dicionários que podem ser usados por exemplo pelo vim.
+# <https://github.com/jpaulogg/bin>
 #------------------------------------------------------------------------------
 usage() {
-	echo "Uso: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]\n
-	-h, --help\n
-	-f, --files        lista de arquivos de entrada\n
-	-d, --directories  lista de diretórios de entrada\n
+	echo "Uso: $(basename  $0) [-f file1 file2 ...] [-d dir1 dir2 ...] [-o output file]
+
+Gera lista de palavras a partir de arquivo(s) de entrada.  Defina ao menos uma entrada
+válida com as opções '-f' e/ou '-d'. Arquivos dos diretórios definidos pela opção '-d'
+serão incluidos recursivamente.
+
+	-h, --help
+	-f, --files        lista de arquivos de entrada
+	-d, --directories  lista de diretórios de entrada
 	-o, --output       saída padrão para o arquivo $PWD/word-list.txt"
 }
 		
@@ -47,13 +53,11 @@ while [ $# -gt 0 ]; do
 		done
 		;;
 	*)
-		echo "Defina opções de entrada.\n$(usage)."
+		echo "\nOpções inválidas de entrada.\n$(usage)."
 		exit 1
 		;;
 	esac
 done
-
-[ -z "$input" ] && echo "Nenhum arquivos de entrada definido" && exit 1
 
 echo "$input" | while read i; do
 	word_list "$i" >> $temp
