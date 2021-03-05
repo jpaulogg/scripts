@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# word-list: Gera lista de palavras a partir de arquivos de entrada. Útil para
-#            gerar dicionários que podem ser usados por exemplo pelo vim.
+# Gera lista de palavras a partir de arquivos de entrada. Útil para
+# criar dicionários que podem ser usados por exemplo pelo vim.
 # <https://github.com/jpaulogg/bin>
 #------------------------------------------------------------------------------
 usage() {
